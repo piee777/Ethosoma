@@ -95,6 +95,7 @@ body::before {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   column-gap: 18px;
   row-gap: 4px;
   padding: 9px 13px;

@@ -120,13 +120,15 @@ img { display: block; max-width: 100%; }
 .site-nav .wrap {
   display: flex;
   align-items: center;
-  gap: 32px;
-  height: 214px;
+  justify-content: space-between;
+  gap: 24px;
+  height: 60px;
+  padding: 0;
 }
 
 .nav-brand-link { white-space: nowrap; }
 .nav-brand-link:hover { opacity: 0.92; }
-.site-nav .nav-brand-link { transform: translateY(2px); }
+.site-nav .nav-brand-link { transform: none; }
 
 .site-nav nav {
   display: flex;
@@ -210,7 +212,7 @@ img { display: block; max-width: 100%; }
    HERO — Dark Cinematic Frame
    ========================================================================= */
 #hero {
-  padding-top: 76px;
+  padding-top: calc(60px + 1rem);
   background: var(--bg);
 }
 
@@ -1220,7 +1222,7 @@ img { display: block; max-width: 100%; }
 @media (max-width: 600px) {
   .nav-brand-link img {
     height: auto !important;
-    max-height: 110px;
+    max-height: 200px;
     max-width: 60vw;
   }
 }
