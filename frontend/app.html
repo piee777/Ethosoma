@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<!--
+  Ethosoma — Drosophila Connectome Digital Twin
+  Copyright (c) 2026 Adel Benaissa. All rights reserved.
+  MIT License — see LICENSE in the repository root.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethosoma · Drosophila CNS — 2-Photon Digital Twin</title>
+  <meta name="description" content="Interactive 2-photon calcium imaging digital twin of the Drosophila melanogaster brain with grounded neuroethological telemetry." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='18' r='7' fill='%235ab0c8'/><circle cx='2' cy='18' r='5' fill='%235ab0c8'/><circle cx='30' cy='18' r='5' fill='%235ab0c8'/><rect x='11' y='1' width='10' height='6' rx='3' fill='%237b8494'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Three.js via import map (version-pinned for stability) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- 3D optical stage -->
+  <div id="scene"></div>
+
+  <!-- Top title bar -->
+  <header id="topbar" class="glass">
+    <div class="tb-left">
+      <a id="btn-back" class="tb-back" href="index.html" title="Documentation &amp; Methodology">
+        <span class="tb-back-arrow" aria-hidden="true">&#8592;</span>
+        <span class="tb-back-label">Documentation &amp; Methodology</span>
+      </a>
+      <div class="tb-brand">
+        <div class="kicker">Ethosoma &middot; 2-Photon Composite</div>
+        <h1>Drosophila CNS Trace <span class="tb-sep">&mdash;</span> <span class="tb-scope">Ethosoma FAFB</span></h1>
+      </div>
+    </div>
+    <div class="tb-actions">
+      <button id="btn-reset" class="topbar-action topbar-reset" title="Reset State [R]">
+        <span class="topbar-action-icon">&#8630;</span>
+        <span class="topbar-action-label">Reset State</span>
+      </button>
+      <button id="btn-circuit-ref" class="topbar-action" title="Circuit Telemetry &amp; Taxonomy [H]">
+        <span class="topbar-action-icon">&#128300;</span>
+        <span class="topbar-action-label">Taxonomy Guide</span>
+      </button>
+    </div>
+    <div class="tb-meta">
+      <div class="sub">D. melanogaster &middot; volumetric calcium imaging &middot; FAFB v14.1 &middot; 4&times;4&times;40 nm&sup3; &middot; 139,255 somas &middot; JRC2018U &middot; optogenetics-compatible</div>
+    </div>
+  </header>
+
+  <!-- Circuit Reference Modal -->
+  <div id="circuit-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Circuit Telemetry Reference">
+    <div class="modal-panel glass">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <span class="modal-icon">🔬</span>
+          <div>
+            <h2 class="modal-title">Circuit Telemetry &amp; Taxonomy</h2>
+            <div class="modal-subtitle">Ethosoma Drosophila CNS — Functional Circuit Reference</div>
+          </div>
+        </div>
+        <button id="modal-close" class="modal-close-btn" title="Close [ESC]">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-table-wrap">
+          <table class="circuit-table">
+            <thead>
+              <tr>
+                <th>Circuit</th>
+                <th>Biological Substrate</th>
+                <th>Functional Role</th>
+                <th>Triggers</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="ct-dot" style="--cd:#00e5ff"></span>LC/LPLC Visual</td>
+                <td>Lobula columnar looming-detection projection neurons</td>
+                <td>Expanding-object detection; approach/avoidance gating</td>
+                <td>Visual pulse, predator shadow, escape state</td>
+              </tr>
+              <tr>
+                <td><span class="ct-dot" style="--cd:#00c2e8"></span>T-series Motion</td>
+                <td>Medulla/lobula motion-processing columns (T, Tm, TmY, CT)</td>
+                <td>Optic flow; translational motion; figure-ground</td>
+                <td>Visual pulse, locomotion, heatwave</td>
+              </tr>
+              <tr>
+                <td><span class="ct-dot" style="--cd:#ff9f1c"></span>PPL1 Aversive DA</td>
+                <td>Mushroom body PPL1 aversive dopamine neurons</td>
+                <td>Punishment memory; threat salience; negative valence</td>
+                <td>Predator, queue, deadline, economic strain</td>
+              </tr>
+              <tr>
+                <td><span class="ct-dot" style="--cd:#ff2a6d"></span>PAM Reward DA</td>
+                <td>Mushroom body PAM reward dopamine neurons</td>
+                <td>Positive reinforcement; sugar memory; RPE signal</td>
+                <td>Sugar, payday, tea, coffee, substance dose</td>
+              </tr>
+              <tr>
+                <td><span class="ct-dot" style="--cd:#ff2244"></span>Giant-Fibre / Descending</td>
+                <td>DNp01 s-CPDN giant-fibre escape motor neurons</td>
+                <td>Escape reflex jump output; threat-to-motor relay</td>
+                <td>Predator shadow, panic bursts, economic idle</td>
+              </tr>
+              <tr>
+                <td><span class="ct-dot" style="--cd:#ffc75f"></span>OA-VUM Arousal</td>
+                <td>Octopaminergic VUM/VPM/ASM/AL arousal neurons</td>
+                <td>Fight-or-flight gating; autonomic arousal; metabolic mobilisation</td>
+                <td>Escape, heatwave, deadline, withdrawal</td>
+              </tr>
+              <tr>
+                <td><span class="ct-dot" style="--cd:#4dd0ff"></span>Central Complex</td>
+                <td>FB / EB / PB — fan-shaped body, ellipsoid body, protocerebral bridge</td>
+                <td>Spatial compass; action selection; integration relay</td>
+                <td>Signal propagation endpoint, craving oscillation, burnout sporadic</td>
+              </tr>
+              <tr>
+                <td><span class="ct-dot" style="--cd:#ffd08a"></span>Gustatory / Taste</td>
+                <td>BM_Taste / claw_tpGRN / dorsal_tpGRN ascending taste projections</td>
+                <td>Sugar/proboscis reflex; gustatory reinforcement cue</td>
+                <td>Sugar reward, tea, coffee</td>
+              </tr>
+              <tr>
+                <td><span class="ct-dot" style="--cd:#b794f6"></span>AL Olfactory</td>
+                <td>Antennal lobe ORN receptor projection neurons</td>
+                <td>Environmental odour coding; sensory noise injection</td>
+                <td>Heatwave (sensory overload), inflation</td>
+              </tr>
+              <tr>
+                <td><span class="ct-dot" style="--cd:#3a4550"></span>Baseline Slate</td>
+                <td>Whole-brain 139,255 somas — FAFB structural anchor</td>
+                <td>Structural reference frame; resting-state slate</td>
+                <td>Always rendered (opacity 0.25); never highlighted</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <span class="modal-kbd">ESC</span> close &nbsp;&middot;&nbsp; <span class="modal-kbd">H</span> toggle
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Telemetry dashboard -->
+  <aside id="hud">
+    <!-- Behavioural state -->
+    <section id="behaviour" class="card glass">
+      <div class="card-head">
+        <span class="tick"></span>
+        <h2>Behavioural State</h2>
+        <span class="r chip" id="behaviour-mode">AUTO</span>
+      </div>
+      <div id="behaviour-state">
+        <span id="behaviour-icon">◆</span>
+        <span id="behaviour-name">—</span>
+      </div>
+      <div id="conf-label">
+        <span>POPULATION VECTOR CONFIDENCE</span>
+        <span id="confidence-val">0 %</span>
+      </div>
+      <div class="track"><i id="confidence-fill"></i></div>
+      <div id="cc-line">
+        <span>CC EXCITATION <b id="cc-excite">0.00</b></span>
+        <span>ARBITER T_EFF <b id="cc-temp">14.00</b></span>
+      </div>
+      <div id="behaviour-sub">ACQUIRING NEURONAL POPULATION VECTOR …</div>
+    </section>
+
+    <!-- Physiological & metabolic vitals -->
+    <section id="vitals" class="card glass">
+      <div class="card-head">
+        <span class="tick"></span>
+        <h2>Physiology &amp; Metabolism</h2>
+        <span class="r chip">HOMEOSTASIS</span>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">METABOLIC RESERVE</span><span class="val"><span id="m-energy">0</span><span class="unit"> %</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-energy" id="b-energy"></div></div>
+        <div class="meter-foot">trehalose / glycogen reserve</div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">AROUSAL / MOTOR DRIVE</span><span class="val"><span id="m-arousal">0</span><span class="unit"> AU</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-arousal" id="b-arousal"></div></div>
+        <div class="meter-foot">octopaminergic drive index</div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">CIRCADIAN PHASE</span><span class="val"><span id="m-phase">—</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-phase" id="b-phase"></div></div>
+        <div class="meter-foot">zeitgeber time (hours since dawn)</div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">SLEEP PRESSURE</span><span class="val"><span id="m-sleep">0</span><span class="unit"> %</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-sleep" id="b-sleep"></div></div>
+        <div class="meter-foot">homeostatic sleep need (Doran-like S)</div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">ALLOSTATIC LOAD / CHRONIC STRAIN</span><span class="val"><span id="m-load">0</span><span class="unit"> %</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-load" id="b-load"></div></div>
+        <div class="meter-foot">cumulative neuroendocrine wear · chronic burden</div>
+      </div>
+    </section>
+
+    <!-- Neuromodulatory balance -->
+    <section id="neuromod" class="card glass">
+      <div class="card-head">
+        <span class="tick"></span>
+        <h2>Neuromodulatory Balance</h2>
+        <span class="r chip">VALENCE × SALIENCE</span>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">DOPA · REWARD</span><span class="val"><span id="m-dopamine">0</span><span class="unit"> AU</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-dopamine" id="b-dopamine"></div></div>
+        <div class="meter-foot">PAM-positive valence (reinforcement)</div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">DOPA · AVERSIVE</span><span class="val"><span id="m-aversive">0</span><span class="unit"> AU</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-aversive" id="b-aversive"></div></div>
+        <div class="meter-foot">PPL1-negative salience (punishment)</div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">OCTOPAMINE</span><span class="val"><span id="m-octopamine">0</span><span class="unit"> AU</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-octopamine" id="b-octopamine"></div></div>
+        <div class="meter-foot">arousal &amp; fight-or-flight gating</div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">SEROTONIN</span><span class="val"><span id="m-serotonin">0</span><span class="unit"> AU</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-serotonin" id="b-serotonin"></div></div>
+        <div class="meter-foot">behavioural flexibility &amp; perseverance</div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">THREAT</span><span class="val"><span id="m-threat">0</span><span class="unit"> AU</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-threat" id="b-threat"></div></div>
+        <div class="meter-foot">predator-shadow salience (giant-fibre circuit)</div>
+      </div>
+    </section>
+
+    <!-- Socio-economic survival -->
+    <section id="socio" class="card glass">
+      <div class="card-head">
+        <span class="tick"></span>
+        <h2>Socio-Economic Metric</h2>
+        <span class="r chip">ALGIERS · DISTRICT 16</span>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">LIQUIDITY / CASH</span><span class="val"><span id="m-liq">0</span><span class="unit"> DZD</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-liq" id="b-liq"></div></div>
+        <div class="meter-foot">discretionary monthly buffer · 5,000 DZD base</div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">REPRODUCTIVE CAPITAL</span><span class="val"><span id="m-repro">0</span><span class="unit"> %</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-repro" id="b-repro"></div></div>
+        <div class="meter-foot">25% gross income skimmed monthly · 240,000 DZD reproductive-capital target · 24 months</div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">MARKET INFLATION</span><span class="val"><span id="m-infl">OFF</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-infl" id="b-infl"></div></div>
+        <div class="meter-foot">price-index pressure · viability drain ×1.8</div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">ALLOSTATIC SCAR</span><span class="val"><span id="m-scar">0</span><span class="unit"> %</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-scar" id="b-scar"></div></div>
+        <div class="meter-foot">cumulative stress damage · persists through payday flush · DA ceiling −15 at 100%</div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">SOCIAL CAPITAL</span><span class="val"><span id="m-social">20</span><span class="unit"> %</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-social" id="b-social"></div></div>
+        <div class="meter-foot">social-buffering hypothesis · threat −8 · anticipatory dread −45% at full bond</div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label"><span class="name">CRAVING DESIRE</span><span class="val"><span id="m-substance">0</span><span class="unit"> %</span></span></div>
+        <div class="meter-track"><div class="meter-fill fill-substance" id="b-substance"></div></div>
+        <div class="meter-foot">associative conditioning · tolerance index <span id="substance-tol">0</span>%</div>
+      </div>
+      <div id="survival-line">
+        <span>CAPACITY STRATEGY</span>
+        <span class="chip forage" id="survival-mode">ACTIVE FORAGING</span>
+      </div>
+    </section>
+
+    <!-- Neuropil anatomy -->
+    <section id="anatomy" class="card glass">
+      <div class="card-head">
+        <span class="tick"></span>
+        <h2>Neuropil Anatomy</h2>
+        <span class="r chip" id="anatomy-count">—</span>
+      </div>
+      <div id="anatomy-rows"></div>
+    </section>
+
+    <!-- Functional cluster legend -->
+    <section id="legend" class="card glass">
+      <div class="card-head">
+        <span class="tick"></span>
+        <h2>Functional Clusters</h2>
+        <span class="r chip">ΔF/F</span>
+      </div>
+      <div class="legend-grid">
+        <div class="legend-item"><span class="legend-dot" style="background:#00e5ff;color:#00e5ff"></span><span class="lname">LC / LPLC Visual</span><span class="lhex">#00e5ff</span><span class="lcount" id="cat-count-1"></span></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#00c2e8;color:#00c2e8"></span><span class="lname">T-series Motion Columns</span><span class="lhex">#00c2e8</span><span class="lcount" id="cat-count-2"></span></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ff9f1c;color:#ff9f1c"></span><span class="lname">PPL1 Aversive DA</span><span class="lhex">#ff9f1c</span><span class="lcount" id="cat-count-3"></span></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ff2a6d;color:#ff2a6d"></span><span class="lname">PAM Reward DA</span><span class="lhex">#ff2a6d</span><span class="lcount" id="cat-count-4"></span></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ff2244;color:#ff2244"></span><span class="lname">Giant-Fibre / Descending</span><span class="lhex">#ff2244</span><span class="lcount" id="cat-count-5"></span></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ffc75f;color:#ffc75f"></span><span class="lname">OA-VUM Arousal</span><span class="lhex">#ffc75f</span><span class="lcount" id="cat-count-6"></span></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#4dd0ff;color:#4dd0ff"></span><span class="lname">Central Complex</span><span class="lhex">#4dd0ff</span><span class="lcount" id="cat-count-7"></span></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ffd08a;color:#ffd08a"></span><span class="lname">Gustatory / Taste</span><span class="lhex">#ffd08a</span><span class="lcount" id="cat-count-8"></span></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#b794f6;color:#b794f6"></span><span class="lname">AL Olfactory / Antennal</span><span class="lhex">#b794f6</span><span class="lcount" id="cat-count-9"></span></div>
+      </div>
+    </section>
+
+    <!-- Assay protocol matrix -->
+    <section id="triggers" class="card glass">
+      <div class="card-head">
+        <span class="tick"></span>
+        <h2>Assay Protocol Matrix</h2>
+        <span class="r chip">EXTRINSIC</span>
+      </div>
+      <div class="prot-list">
+        <button id="btn-sensory" class="act-btn a-cyan" type="button">
+          <span class="act-row"><span class="act-badge">2P-STIM</span><span class="act-lat">250 ms</span></span>
+          <span class="act-name">Visual Pulse</span>
+          <span class="act-sub">LC/LPLC &middot; Motion Columns &rarr; CC</span>
+        </button>
+        <button id="btn-threat" class="act-btn a-amber" type="button">
+          <span class="act-row"><span class="act-badge">2P-STIM</span><span class="act-lat">520 ms</span></span>
+          <span class="act-name">Predator Shadow</span>
+          <span class="act-sub">PPL1 &middot; Giant-Fibre escape</span>
+        </button>
+        <button id="btn-forage" class="act-btn a-coral" type="button">
+          <span class="act-row"><span class="act-badge">2P-STIM</span><span class="act-lat">1000 ms</span></span>
+          <span class="act-name">Sugar Reward</span>
+          <span class="act-sub">Gustatory &rarr; PAM</span>
+        </button>
+        <button id="btn-heat" class="act-btn a-cyan" type="button">
+          <span class="act-row"><span class="act-badge">CHRONIC</span><span class="act-lat">34 s</span></span>
+          <span class="act-name">Heatwave &amp; Noise</span>
+          <span class="act-sub">Columns &middot; AL &middot; OA</span>
+        </button>
+        <button id="btn-queue" class="act-btn a-amber" type="button">
+          <span class="act-row"><span class="act-badge">CHRONIC</span><span class="act-lat">26 s</span></span>
+          <span class="act-name">Waiting Queue</span>
+          <span class="act-sub">PAM&darr; &middot; PPL1&uarr; &middot; Freeze</span>
+        </button>
+        <button id="btn-deadline" class="act-btn a-amber" type="button">
+          <span class="act-row"><span class="act-badge">ACUTE</span><span class="act-lat">16 s</span></span>
+          <span class="act-name">Late-Night Deadline</span>
+          <span class="act-sub">Threat &middot; Giant-Fibre</span>
+        </button>
+        <button id="btn-tea" class="act-btn a-coral" type="button">
+          <span class="act-row"><span class="act-badge">RESTORE</span><span class="act-lat">14 s</span></span>
+          <span class="act-name">Mint Tea / Coffee</span>
+          <span class="act-sub">Gustatory &rarr; PAM</span>
+        </button>
+        <button id="btn-payday" class="act-btn a-coral" type="button">
+          <span class="act-row"><span class="act-badge">SOCIO-EC</span><span class="act-lat">90 s</span></span>
+          <span class="act-name">Payday Ingestion</span>
+          <span class="act-sub">PAM &middot; Liquidity</span>
+        </button>
+        <button id="btn-inflation" class="act-btn a-amber" type="button">
+          <span class="act-row"><span class="act-badge">SOCIO-EC</span><span class="act-lat">45 s</span></span>
+          <span class="act-name">Inflation Surge</span>
+          <span class="act-sub">AL &middot; Columns &middot; Aversive</span>
+        </button>
+        <button id="btn-kin-shock" class="act-btn a-amber" type="button">
+          <span class="act-row"><span class="act-badge">SOCIO-EC</span><span class="act-lat">8&ndash;13k DZD</span></span>
+          <span class="act-name">Kin Obligation Levy</span>
+          <span class="act-sub">Kin Reciprocity</span>
+        </button>
+        <button id="btn-coffee" class="act-btn a-coral" type="button">
+          <span class="act-row"><span class="act-badge">SOCIO-EC</span><span class="act-lat">8 s</span></span>
+          <span class="act-name">Street Coffee</span>
+          <span class="act-sub">Gustatory &rarr; PAM</span>
+        </button>
+        <button id="btn-substance" class="act-btn a-substance" type="button">
+          <span class="act-row"><span class="act-badge">CONDITIONED</span><span class="act-lat">14 s</span></span>
+          <span class="act-name" id="substance-label">Sample Unknown Substance</span>
+          <span class="act-sub">PAM &middot; CC Escape Vector</span>
+        </button>
+      </div>
+      <div class="pm-status">
+        <div class="pm-status-label">ACTIVE EPISODES · CHRONIC/ACUTE</div>
+        <div class="pm-status-chips">
+          <span class="chip" id="hint-payday">0.0 s</span>
+          <span class="chip" id="hint-heat">HEAT</span>
+          <span class="chip" id="hint-queue">QUEUE</span>
+          <span class="chip" id="hint-deadline">DEADLINE</span>
+          <span class="chip" id="hint-tea">TEA</span>
+          <span class="chip" id="hint-inflation">INFL</span>
+          <span class="chip" id="hint-coffee">COFFEE</span>
+          <span class="chip" id="hint-substance">SUBSTANCE</span>
+          <span class="chip" id="pm-tol">TOL <span id="substance-tol">0</span>%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Event trace -->
+    <section id="trace-box" class="card glass">
+      <div class="card-head">
+        <span class="tick"></span>
+        <h2>Event Trace</h2>
+        <span class="r chip">LOG</span>
+      </div>
+      <div id="trace"></div>
+    </section>
+
+    <div id="foot">FLYWIRE · DROSOPHILA MELANOGASTER · FAFB-VNC NEUROANATOMY</div>
+  </aside>
+
+  <!-- Boot overlay -->
+  <div id="boot">
+    <div class="ring"></div>
+    <div class="msg">calibrating optical pathway</div>
+  </div>
+
+  <noscript>
+    <div style="position:fixed;inset:0;z-index:99;background:#04060b;color:#7dd3fc;display:flex;align-items:center;justify-content:center;font-family:monospace;">
+      This digital twin requires JavaScript to render the volumetric brain.
+    </div>
+  </noscript>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+
+<!-- Copyright (c) 2026 Adel Benaissa. All rights reserved. -->
+</html>

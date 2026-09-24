@@ -1,0 +1,288 @@
+{
+ "total": 139255,
+ "scale": 2.4585125998770746e-06,
+ "circuits": {
+  "Baseline": 87710,
+  "LC/LPLC Visual Projection": 4366,
+  "T-series Visual Columns": 42027,
+  "PPL1 Aversive Dopamine": 16,
+  "PAM Reward Dopamine": 307,
+  "Giant-Fibre / Descending": 171,
+  "OA-VUM Octopaminergic Arousal": 43,
+  "Central Complex": 2193,
+  "Gustatory / Taste": 143,
+  "AL Olfactory / Antennal Sensory": 2279
+ },
+ "regions": [
+  {
+   "token": "ME",
+   "name": "Medulla (optic)",
+   "count": 66769,
+   "pct": 47.9
+  },
+  {
+   "token": "LO",
+   "name": "Lobula (optic)",
+   "count": 14555,
+   "pct": 10.5
+  },
+  {
+   "token": "LA",
+   "name": "Lamina (optic)",
+   "count": 7385,
+   "pct": 5.3
+  },
+  {
+   "token": "GNG",
+   "name": "Gnathal Ganglion",
+   "count": 5421,
+   "pct": 3.9
+  },
+  {
+   "token": "NO_CONS",
+   "name": "Unassigned",
+   "count": 5074,
+   "pct": 3.6
+  },
+  {
+   "token": "MB_CA",
+   "name": "Mushroom Body Calyx",
+   "count": 4657,
+   "pct": 3.3
+  },
+  {
+   "token": "AVLP",
+   "name": "Ant. Ventral Lateral Protocerebrum",
+   "count": 3740,
+   "pct": 2.7
+  },
+  {
+   "token": "LOP",
+   "name": "Lobula Plate (optic)",
+   "count": 3333,
+   "pct": 2.4
+  },
+  {
+   "token": "AL",
+   "name": "Antennal Lobe",
+   "count": 3304,
+   "pct": 2.4
+  },
+  {
+   "token": "SMP",
+   "name": "Sup. Medial Protocerebrum",
+   "count": 3176,
+   "pct": 2.3
+  },
+  {
+   "token": "SLP",
+   "name": "Sup. Lateral Protocerebrum",
+   "count": 2678,
+   "pct": 1.9
+  },
+  {
+   "token": "LH",
+   "name": "Lateral Horn",
+   "count": 2677,
+   "pct": 1.9
+  },
+  {
+   "token": "PLP",
+   "name": "Posterior Lateral Protocerebrum",
+   "count": 1869,
+   "pct": 1.3
+  },
+  {
+   "token": "FB",
+   "name": "Fan-Shaped Body",
+   "count": 1715,
+   "pct": 1.2
+  },
+  {
+   "token": "IPS",
+   "name": "Inf. Posterior Slope",
+   "count": 1603,
+   "pct": 1.2
+  },
+  {
+   "token": "SPS",
+   "name": "Sup. Posterior Slope",
+   "count": 1281,
+   "pct": 0.9
+  },
+  {
+   "token": "SAD",
+   "name": "Saddle",
+   "count": 1050,
+   "pct": 0.8
+  },
+  {
+   "token": "PVLP",
+   "name": "Post. Ventral Lateral Protocerebrum",
+   "count": 896,
+   "pct": 0.6
+  },
+  {
+   "token": "LAL",
+   "name": "Lateral Accessory Lobe",
+   "count": 870,
+   "pct": 0.6
+  },
+  {
+   "token": "ICL",
+   "name": "Inferior Clamp",
+   "count": 770,
+   "pct": 0.6
+  },
+  {
+   "token": "AOTU",
+   "name": "Anterior Optic Tubercle",
+   "count": 722,
+   "pct": 0.5
+  },
+  {
+   "token": "CRE",
+   "name": "Crepine",
+   "count": 702,
+   "pct": 0.5
+  },
+  {
+   "token": "PRW",
+   "name": "Prow",
+   "count": 617,
+   "pct": 0.4
+  },
+  {
+   "token": "AMMC",
+   "name": "Antenna Mechanosensory & Motor Ctr",
+   "count": 508,
+   "pct": 0.4
+  },
+  {
+   "token": "WED",
+   "name": "Wedge",
+   "count": 461,
+   "pct": 0.3
+  },
+  {
+   "token": "NO",
+   "name": "Noduli",
+   "count": 450,
+   "pct": 0.3
+  },
+  {
+   "token": "SCL",
+   "name": "Superior Clamp",
+   "count": 433,
+   "pct": 0.3
+  },
+  {
+   "token": "VES",
+   "name": "Vest",
+   "count": 417,
+   "pct": 0.3
+  },
+  {
+   "token": "SIP",
+   "name": "Superior Intermediate Protocerebrum",
+   "count": 368,
+   "pct": 0.3
+  },
+  {
+   "token": "EB",
+   "name": "Ellipsoid Body",
+   "count": 365,
+   "pct": 0.3
+  },
+  {
+   "token": "FLA",
+   "name": "Flange",
+   "count": 334,
+   "pct": 0.2
+  },
+  {
+   "token": "MB_ML",
+   "name": "Mushroom Body Medial Lobe",
+   "count": 288,
+   "pct": 0.2
+  },
+  {
+   "token": "OCG",
+   "name": "Optic Glomerulus",
+   "count": 270,
+   "pct": 0.2
+  },
+  {
+   "token": "IB",
+   "name": "Inferior Bridge",
+   "count": 140,
+   "pct": 0.1
+  },
+  {
+   "token": "PB",
+   "name": "Protocerebral Bridge",
+   "count": 116,
+   "pct": 0.1
+  },
+  {
+   "token": "MB_VL",
+   "name": "Mushroom Body Vertical Lobe",
+   "count": 57,
+   "pct": 0.0
+  },
+  {
+   "token": "ATL",
+   "name": "Anterolateral Protocerebrum",
+   "count": 50,
+   "pct": 0.0
+  },
+  {
+   "token": "AME",
+   "name": "AME",
+   "count": 39,
+   "pct": 0.0
+  },
+  {
+   "token": "MB_PED",
+   "name": "Mushroom Body Peduncle",
+   "count": 36,
+   "pct": 0.0
+  },
+  {
+   "token": "GOR",
+   "name": "Gorilla",
+   "count": 24,
+   "pct": 0.0
+  },
+  {
+   "token": "CAN",
+   "name": "Cantal",
+   "count": 10,
+   "pct": 0.0
+  },
+  {
+   "token": "UNASGD",
+   "name": "Unassigned",
+   "count": 9,
+   "pct": 0.0
+  },
+  {
+   "token": "EPA",
+   "name": "Epaulette",
+   "count": 8,
+   "pct": 0.0
+  },
+  {
+   "token": "GA",
+   "name": "GA",
+   "count": 7,
+   "pct": 0.0
+  },
+  {
+   "token": "BU",
+   "name": "Bulb",
+   "count": 1,
+   "pct": 0.0
+  }
+ ]
+}

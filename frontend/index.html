@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<!--
+  Ethosoma — Drosophila Connectome Digital Twin
+  Copyright (c) 2026 Adel Benaissa. All rights reserved.
+  MIT License — see LICENSE in the repository root.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethosoma — Drosophila Connectome Digital Twin</title>
+  <meta name="description" content="Whole-brain connectome of an adult female Drosophila melanogaster: 139,255 proofread somas from FlyWire FAFB electron microscopy, coupled to an in-silico macro-ethological stress engine." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='18' r='7' fill='none' stroke='%232563eb' stroke-width='2'/><circle cx='2' cy='18' r='4' fill='none' stroke='%232563eb' stroke-width='2'/><circle cx='30' cy='18' r='4' fill='none' stroke='%232563eb' stroke-width='2'/><circle cx='16' cy='4' r='3' fill='none' stroke='%2371717a' stroke-width='1.5'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/landing.css" />
+  <link rel="preload" as="image" href="assets/connectome-anatomy-frontal.png" />
+</head>
+<body>
+
+  <!-- ─── Navigation ──────────────────────────────────────────────────── -->
+  <header class="site-nav">
+    <div class="wrap">
+      <a href="index.html" class="nav-brand-link" style="display: inline-flex; align-items: center; text-decoration: none; padding: 2px 0;">
+        <img
+          src="assets/logo.png"
+          alt="ETHOSOMA"
+          style="height: 200px; width: auto; object-fit: contain; display: block;"
+        />
+      </a>
+
+      <nav>
+        <a href="#overview">RESEARCH</a>
+        <a href="#connectome">CONNECTOME</a>
+        <a href="#framework">ALLOSTASIS</a>
+        <a href="#citations">PUBLICATIONS</a>
+      </nav>
+
+      <div class="nav-right">
+        <a class="badge" href="https://flywire.ai" target="_blank" rel="noopener">FlyWire FAFB v14.1</a>
+        <a class="gh-link" href="https://github.com/htem/FlyWire" target="_blank" rel="noopener" aria-label="FlyWire on GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11.1 11.1 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.58.23 2.75.11 3.04.73.81 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14 0 1.54-.01 2.78-.01 3.16 0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ─── Hero: Cinematic Inquiry Frame ─────────────────────────────── -->
+    <section id="hero">
+      <div class="hero-frame">
+        <img
+          class="hero-img"
+          src="assets/connectome-anatomy-frontal.png"
+          width="1180"
+          height="680"
+          alt="Drosophila melanogaster whole-brain connectome — orthographic fronto-dorsal projection of 139,255 proofread somas"
+        />
+        <div class="hero-vignette"></div>
+
+        <div class="hero-copy">
+          <span class="hero-kicker">THE ALLOSTATIC HYPOTHESIS &middot; COMPUTATIONAL ETHOLOGY</span>
+          <h1 class="hero-headline">How does chronic resource scarcity reshape the wiring of a living brain?</h1>
+          <p class="hero-subtitle">
+            At the intersection of FlyWire connectomics and socio-economic stress dynamics,
+            exploring 139,255 somas under allostatic strain.
+          </p>
+          <div class="hero-ctas">
+            <button class="lm-btn" id="lm-btn" type="button">
+              <canvas id="lm-fx"></canvas>
+              <svg class="ico" viewBox="0 0 115 115" aria-hidden="true">
+                <g stroke="currentColor" stroke-width="17" stroke-linecap="round">
+                  <path d="M57.5 8.5 V106.5"/>
+                  <path d="M8.5 57.5 H106.5"/>
+                </g>
+              </svg>
+              <span class="lbl">Enter Simulation</span>
+            </button>
+            <a class="btn btn-hero-ghost" href="#framework">Read Scientific Methodology</a>
+          </div>
+</div>
+      </div>
+    </section>
+
+    <!-- ─── Stats Bar ─────────────────────────────────────────────────── -->
+    <section class="stats-bar">
+      <div class="wrap">
+        <div class="stats-row">
+          <div class="stat">
+            <div class="stat-num" data-count="139255">139,255</div>
+            <div class="stat-lab">Proofread somas &middot; FAFB</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num" data-count="81324">81,324</div>
+            <div class="stat-lab">Medulla + Lobula neurons</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num" data-count="42027">42,027</div>
+            <div class="stat-lab">T-series motion columns</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num" data-count="2196">2,196</div>
+            <div class="stat-lab">Central-complex integrators</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Overview ────────────────────────────────────────────────────── -->
+    <section id="overview" class="section">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="sec-eyebrow">Overview</div>
+          <h2>From frozen electron microscopy to a living stress physiology</h2>
+          <p class="lede">
+            The connectome is the structural fact. The twin is what the structure
+            becomes when time, metabolism, and deprivation act upon it.
+          </p>
+        </div>
+        <div class="overview-grid">
+          <div class="overview-prose">
+            <p>
+              The <b>Ethosoma</b> twin begins as the published FlyWire
+              FAFB reconstruction &mdash; an AI-segmented, human-proofread wiring
+              diagram of the adult female brain, resolved from whole-brain electron
+              microscopy at 4&times;4&times;40&nbsp;nm. All 139,255 annotated somas are
+              decoded into a hardware-rendered volumetric point cloud organised by
+              neuropil identity and circuit tag.
+            </p>
+            <p>
+              On this anatomical substrate we mount an in-silico physiology: a
+              six-state ethogram driven by a neuromodulatory population vector
+              (PAM reward dopamine, PPL1 aversive dopamine, octopaminergic arousal,
+              serotonin, sleep pressure, circadian phase). Exogenous environmental
+              stressors &mdash; heat, queues, deadlines, inflation, kinship
+              obligations &mdash; enter as integrated <b>allostatic load</b>, and the
+              resulting dynamics render as travelling calcium transients across the
+              real circuit modules: optic columns, mushroom-body valence, and
+              central-complex action selection.
+            </p>
+            <p>
+              The result is a hypothesis in a browser: one heavy hemisphere of
+              neuroanatomy, one thin layer of deprivation economics, and a running
+              account of what a nervous system does when it cannot afford its own
+              stability.
+            </p>
+          </div>
+          <div class="overview-side">
+            <figure class="em-specimen-card">
+              <img
+                src="assets/em-slice.svg"
+                width="800"
+                height="500"
+                alt="FAFB serial-section transmission electron microscopy slice of dense neuropil"
+              />
+              <div class="em-badge">FAFB DATASET &middot; 4&times;4&times;40 nm VOXEL RESOLUTION</div>
+              <figcaption class="em-caption">
+                Serial section transmission electron microscopy volume capturing
+                synaptic clefts and dense-core vesicles.
+              </figcaption>
+            </figure>
+            <div class="aside-notes">
+              <div class="note">
+                <span class="n-k">SPATIAL REFERENCE</span>
+                <p>All coordinates in JRC2018U adult brain space; native FAFB voxel scale 4&times;4&times;40&nbsp;nm maintained end-to-end.</p>
+              </div>
+              <div class="note">
+                <span class="n-k">CIRCUIT TAGGING</span>
+                <p>Nine canonical modules recovered from the connectome: LC/LPLC looming vision, T-series motion columns, PPL1, PAM, giant-fibre, OA-VUM, central complex, gustatory, antennal olfactory.</p>
+              </div>
+              <div class="note">
+                <span class="n-k">RENDERING</span>
+                <p>139,255-GPU-point pipeline with GCaMP-style calcium envelopes, travelling-wave stimuli, and restraint-tuned bloom at 60&nbsp;fps.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Connectome Data ────────────────────────────────────────────── -->
+    <section id="connectome" class="section">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="sec-eyebrow">Connectome Data</div>
+          <h2>Anatomical sub-regions &amp; data origin</h2>
+          <p class="lede">
+            Every subsystem exposed by the twin inherits its exact soma counts and
+            FlyWire neuropil tokens from the FAFB reconstruction.
+          </p>
+        </div>
+
+        <div class="atlas-viewport">
+          <div class="atlas-hud">
+            <span class="atlas-hud-left">JRC2018U Atlas &middot; 139,255 somas</span>
+          </div>
+
+          <div class="atlas-stage">
+            <img
+              src="assets/images/flywarebrain.png"
+              width="2358"
+              height="1528"
+              loading="lazy"
+              alt="Whole-brain volumetric render of the Drosophila connectome"
+            />
+          </div>
+        </div>
+
+        <div class="region-grid">
+          <!-- Mushroom body calyx -->
+          <article class="region-col">
+            <div class="region-stat"><span class="region-num">4,657</span><span class="region-unit">somas</span></div>
+            <h3 class="region-title">Mushroom Body Calyx</h3>
+            <p class="region-desc">
+              Kenyon cells form a sparse, high-dimensional associative layer.
+              PAM (307 somas) and PPL1 (16 somas) dopaminergic branches invert
+              the valence of each sensory trace &mdash; converting a neutral cue
+              into appetitive reinforcement or aversive salience &mdash; and
+              consolidate it into long-term memory.
+            </p>
+          </article>
+
+          <!-- Central complex -->
+          <article class="region-col">
+            <div class="region-stat"><span class="region-num">2,196</span><span class="region-unit">somas</span></div>
+            <h3 class="region-title">Central Complex</h3>
+            <p class="region-desc">
+              The ellipsoid body forms a heading compass; the fan-shaped body
+              gates action selection; the protocerebral bridge and noduli close
+              the sensorimotor loop. In the twin this is the integration relay
+              &mdash; goal-seeking drive, confidence-weighted arbitration, and
+              the restless craving oscillation of the conditioned state.
+            </p>
+          </article>
+
+          <!-- Optic lobes -->
+          <article class="region-col">
+            <div class="region-stat"><span class="region-num">81,324</span><span class="region-unit">somas</span></div>
+            <h3 class="region-title">Optic Lobes</h3>
+            <p class="region-desc">
+              The largest sensory territory of the brain: 66,769 medulla, 14,555
+              lobula, 3,333 lobula-plate and 7,385 lamina cells process optic
+              flow at columnar resolution, with 42,027 T-series neurons
+              implementing motion detection and looming-threat estimation.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Theoretical Framework: Allostasis & Mathematical Framework ── -->
+    <section id="framework" class="section">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="sec-eyebrow">Theoretical Framework</div>
+          <h2>Resource scarcity enters the nervous system as allostatic load</h2>
+          <p class="lede">
+            Economic states are not metaphors for stress physiology &mdash; they are
+            boundary conditions on it. The twin implements that boundary condition
+            explicitly, as a closed non-linear dynamical system in
+            <span class="var">main.js</span> &mdash; every constant empirically
+            anchored to the FAFB-reconstructed circuit.
+          </p>
+        </div>
+
+        <div class="theory-grid reveal">
+          <p class="theory-lede">
+            The twin&rsquo;s macroscopic trajectory is governed by a forced
+            slow&ndash;fast hybrid dynamical system: continuous neuromodulatory
+            relaxation coupled to a non-linear economic phase space exhibiting
+            saddle-node fold bifurcations, path-dependent kindling, and
+            bio-energetic strain.
+          </p>
+
+          <!-- Row 1 — Equation 01 / State 01 -->
+          <figure class="dyn-item">
+            <h3 class="dyn-sub"><span class="dyn-num">01</span>Saddle-Node Fold &amp; Annihilation Threshold</h3>
+            <div class="eq-rule">
+              <div class="eq">
+                <span class="eq-l"><i>L</i><sub>sn</sub>(<i>D</i>)</span>
+                <span class="eq-o">=</span>
+                <span class="eq-r">5000 <span class="eq-op">&middot;</span>
+                  <span class="frac">
+                    <span class="fr-n">0.016 &middot; (1 + <i>D</i>/60)</span>
+                    <span class="fr-d">0.028 + 0.016 &middot; (<i>D</i>/60)</span>
+                  </span>
+                </span>
+              </div>
+            </div>
+            <figcaption class="dyn-note">
+              The active foraging attractor annihilates along the critical fold
+              line <i>L</i><sub>sn</sub>(<i>D</i>) &mdash; <b>3,009 DZD</b> at
+              baseline debt. For liquidity below this locus, the resignation
+              nullcline vanishes, forcing the trajectory into a deterministic
+              collapse toward the <i>R</i>&nbsp;=&nbsp;1.0 boundary before
+              triggering the 2:1 hysteresis freeze gate.
+            </figcaption>
+          </figure>
+
+          <article class="state-card">
+            <div class="state-top">
+              <span class="state-label">State 01 &middot; Appetitive Reinforcement &middot; PAM</span>
+            </div>
+            <h4>Foraging &amp; reward pursuit</h4>
+            <p>
+              PAM (307 somas) encodes reward-prediction error. Every appetitive
+              trace raises dopamine, buffers allostatic load, and re-entrenches
+              the foraging policy until depletion tips the balance.
+            </p>
+            <span class="state-path">Pathway &mdash; PAM &rarr; MB calyx &rarr; valence inversion &rarr; RPE</span>
+          </article>
+
+          <!-- Row 2 — Equation 02 / State 02 -->
+          <figure class="dyn-item">
+            <h3 class="dyn-sub"><span class="dyn-num">02</span>Epigenetic Kindling &amp; Basin Deformation</h3>
+            <div class="eq-rule">
+              <div class="eq">
+                <span class="eq-l">&kappa;<sub>f</sub></span>
+                <span class="eq-o">=</span>
+                <span class="eq-r">
+                  <span class="eq-cl">1 &minus; 0.12 &middot; <span class="code">freezeKindle</span>,</span>
+                  <span class="eq-op">Gate:</span>
+                  <span class="eq-cl"><i>L</i> &lt; 15% &middot; (2 &minus; &kappa;<sub>f</sub>) &nbsp;&and;&nbsp; <i>R</i> &gt; 0.6 &middot; &kappa;<sub>f</sub></span>
+                </span>
+              </div>
+            </div>
+            <figcaption class="dyn-note">
+              Repeated entries into economic quiescence leave a cumulative kindling
+              trace that permanently deforms the basin of attraction. By episode
+              #10, the activation threshold sensitizes by <b>36%</b> (triggering at
+              <i>R</i>&nbsp;&gt;&nbsp;0.384 and <i>L</i>&nbsp;&lt;&nbsp;20.4%),
+              locking the agent into chronic vulnerability.
+            </figcaption>
+          </figure>
+
+          <article class="state-card">
+            <div class="state-top">
+              <span class="state-label">State 02 &middot; Aversive Withdrawal &middot; PPL1</span>
+            </div>
+            <h4>Threat salience &amp; punishment</h4>
+            <p>
+              PPL1 (16 somas) punishes. Relief is encoded as a transient PPL1
+              silence; each authorised dose silences the branch again, ratcheting
+              tolerance upward while the avoidance policy strengthens.
+            </p>
+            <span class="state-path">Pathway &mdash; PPL1 &rarr; MB lobes &rarr; threat salience &rarr; CC</span>
+          </article>
+
+          <!-- Row 3 — Equation 03 / State 03 -->
+          <figure class="dyn-item">
+            <h3 class="dyn-sub"><span class="dyn-num">03</span>Neuro-Metabolic Inefficiency &amp; ATP Strain</h3>
+            <div class="eq-rule">
+              <div class="eq">
+                <span class="eq-l">&Omega;(&sigma;)</span>
+                <span class="eq-o">=</span>
+                <span class="eq-r">
+                  <span class="eq-cl">1 + 0.45 &middot; (<i>&sigma;</i>/100) &middot; (1 + 0.4 &middot; 1<sub>burnout</sub>)</span>
+                  <span class="eq-op">+</span>
+                  <span class="eq-cl">0.02 &middot; s(<i>L</i>) &middot; (1 + 0.6 &middot; <i>D</i>/60)</span>
+                </span>
+              </div>
+            </div>
+            <figcaption class="dyn-note">
+              Synaptic maintenance and allostatic scarring (<i>&sigma;</i>) drive an
+              irreversible basal metabolic penalty. Quiescence is no longer an
+              energetic safe harbor: cumulative trauma raises baseline somatic
+              expenditure by up to <b>1.63&times;</b>, tightening the precarity trap.
+            </figcaption>
+          </figure>
+
+          <article class="state-card">
+            <div class="state-top">
+              <span class="state-label">State 03 &middot; Arousal &amp; Freeze &middot; OA-VUM</span>
+            </div>
+            <h4>Quiescence &rarr; Metabolic Deprivation Freeze</h4>
+            <p>
+              Octopaminergic arousal drives locomotion. When octopamine dominance
+              outlasts reward depletion and allostatic load passes threshold, the
+              twin latches into economic-quiescence freeze &mdash; reserve preserved,
+              opportunity forfeited.
+            </p>
+            <span class="state-path">Pathway &mdash; OA-VUM &rarr; CC &rarr; action arbitration &rarr; freeze</span>
+          </article>
+
+          <p class="theory-outro">
+            Systemic strain therefore forces a bifurcation from adaptive foraging to a
+            persistent, trapped state &mdash; formalized as
+            <b>Metabolic Deprivation Freeze</b> (<i>Et-Takhyaal</i>) &mdash; where
+            energetic conservation is sustained only through progressive allostatic
+            scarring and network dependency.
+          </p>
+        </div>
+
+        <!-- Full-width Neurochemical Parameter Legend -->
+        <div class="legend-wide reveal">
+          <div class="legend-head">
+            <span class="legend-title">Neurochemical Parameter Legend</span>
+            <span class="legend-meta">FAFB v14.1 annotation mapping</span>
+          </div>
+          <div class="legend-grid">
+            <div class="legend-card">
+              <div class="lg-id">PAM</div>
+              <div class="lg-role">Reward salience</div>
+              <div class="lg-note">Reward dopamine &middot; reinforces appetitive valence &middot; 307 somas</div>
+            </div>
+            <div class="legend-card">
+              <div class="lg-id">PPL1</div>
+              <div class="lg-role">Threat aversion</div>
+              <div class="lg-note">Aversive dopamine &middot; punishes, encodes threat &middot; 16 somas</div>
+            </div>
+            <div class="legend-card">
+              <div class="lg-id">OA-VUM</div>
+              <div class="lg-role">Arousal mobilisation</div>
+              <div class="lg-note">Octopaminergic arousal &middot; drives locomotion and drive</div>
+            </div>
+            <div class="legend-card">
+              <div class="lg-id">CC</div>
+              <div class="lg-role">Action arbitration</div>
+              <div class="lg-note">Central complex &middot; confidence-weighted action selection</div>
+            </div>
+            <div class="legend-card">
+              <div class="lg-id">Economic Quiescence</div>
+              <div class="lg-role">Metabolic freeze</div>
+              <div class="lg-note">Metabolic deprivation freeze construct &middot; reserve-preserving immobility</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Citations & Attribution ────────────────────────────────────── -->
+    <section id="citations" class="section">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="sec-eyebrow">Academic Provenance</div>
+          <h2>Source publications &amp; attribution</h2>
+          <p class="lede">
+            The connectome, annotations, and cell-type taxonomy derive from the 2024
+            <em>Nature</em> whole-brain reconstructions of the FlyWire consortium.
+          </p>
+        </div>
+
+        <div class="cite-grid">
+          <article class="cite">
+            <div class="cite-year">2024 &middot; NATURE 634</div>
+            <div class="cite-auth">Dorkenwald, S., Matsliah, A., Sterling, A. R., <b>et al.</b></div>
+            <div class="cite-title">Neuronal wiring diagram of an adult brain.</div>
+            <div class="cite-jn">Nature 634, 124&ndash;138</div>
+            <div class="cite-doi"><a href="https://doi.org/10.1038/s41586-024-07558-y" target="_blank" rel="noopener">doi.org/10.1038/s41586-024-07558-y</a></div>
+          </article>
+          <article class="cite">
+            <div class="cite-year">2024 &middot; NATURE 634</div>
+            <div class="cite-auth">Schlegel, P., Yin, Y., Bates, A. S., <b>et al.</b></div>
+            <div class="cite-title">Whole-brain annotation and multi-connectome cell typing of Drosophila.</div>
+            <div class="cite-jn">Nature 634, 139&ndash;152</div>
+            <div class="cite-doi"><a href="https://doi.org/10.1038/s41586-024-07686-5" target="_blank" rel="noopener">doi.org/10.1038/s41586-024-07686-5</a></div>
+          </article>
+        </div>
+
+        <div class="attr-section">
+          <h4 class="attr-heading">Code &amp; Open-Source Attribution</h4>
+          <div class="attr-grid">
+            <a class="attr-card" href="https://flywire.ai" target="_blank" rel="noopener">
+              <span class="attr-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              </span>
+              <div class="attr-body">
+                <div class="attr-name">FlyWire FAFB v14.1</div>
+                <div class="attr-url">flywire.ai</div>
+              </div>
+              <span class="attr-arrow">&nearr;</span>
+            </a>
+            <a class="attr-card" href="https://codex.flywire.ai" target="_blank" rel="noopener">
+              <span class="attr-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+              </span>
+              <div class="attr-body">
+                <div class="attr-name">Codex Proofreading</div>
+                <div class="attr-url">codex.flywire.ai</div>
+              </div>
+              <span class="attr-arrow">&nearr;</span>
+            </a>
+            <a class="attr-card" href="https://github.com/htem/FlyWire" target="_blank" rel="noopener">
+              <span class="attr-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+              </span>
+              <div class="attr-body">
+                <div class="attr-name">FlyWire Toolkit</div>
+                <div class="attr-url">github.com/htem/FlyWire</div>
+              </div>
+              <span class="attr-arrow">&nearr;</span>
+            </a>
+            <a class="attr-card" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8253711/" target="_blank" rel="noopener">
+              <span class="attr-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 5c0 1.66-4.03 3-9 3S3 6.66 3 5"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+              </span>
+              <div class="attr-body">
+                <div class="attr-name">FAFB EM Volume</div>
+                <div class="attr-url">Buhmann &amp; Funke et al. 2021</div>
+              </div>
+              <span class="attr-arrow">&nearr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ─── Footer ───────────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="fb-logo">
+            <img
+              src="assets/logo.png"
+              alt="ETHOSOMA"
+              style="height: 64px; width: auto; object-fit: contain; display: block;"
+            />
+          </div>
+          <p>
+            An academic visualization &mdash; Ethosoma, the in-silico ethological twin of the
+            FlyWire FAFB adult female connectome. Built for research, pedagogy, and
+            science communication.
+          </p>
+        </div>
+        <div class="footer-links">
+          <div class="fl-group">
+            <div class="fl-title">Platform</div>
+            <a href="app.html">Launch Simulation Studio</a>
+            <a href="#overview">Research Overview</a>
+            <a href="#connectome">Connectome Data</a>
+          </div>
+          <div class="fl-group">
+            <div class="fl-title">Dataset</div>
+            <a href="https://flywire.ai" target="_blank" rel="noopener">FlyWire Portal</a>
+            <a href="https://codex.flywire.ai" target="_blank" rel="noopener">Codex Proofreading</a>
+            <a href="https://doi.org/10.1038/s41586-024-07558-y" target="_blank" rel="noopener">Nature 2024 Paper</a>
+          </div>
+          <div class="fl-group">
+            <div class="fl-title">Technical</div>
+            <span class="fl-static">Adult female &middot; <em>D. melanogaster</em></span>
+            <span class="fl-static">FlyWire FAFB v14.1 &middot; JRC2018U</span>
+            <span class="fl-static">WebGL 2 &middot; Three.js</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>139,255 GPU point somas &middot; 4&times;4&times;40 nm voxel resolution</span>
+        <div class="footer-tools">
+          <div class="footer-social">
+            <a class="social-link" href="https://github.com/piee777" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            </a>
+            <a class="social-link" href="https://www.linkedin.com/in/benaissa-adel-01188b3a1" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+          <a href="#hero">Back to top &uarr;</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/liquid-metal.js" defer></script>
+  <script type="module" src="js/landing.js"></script>
+
+  <!-- Copyright (c) 2026 Adel Benaissa. All rights reserved. -->
+</body>
+</html>

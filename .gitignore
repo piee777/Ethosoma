@@ -1,0 +1,64 @@
+# ─── Dependencies ───────────────────────────────────────────────────────────
+node_modules/
+venv/
+.venv/
+*.egg-info/
+
+# ─── Python ─────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+build/
+dist/
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+
+# ─── Environment & Secrets ──────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+
+# ─── OS Artifacts ───────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+Thumbs.db
+Desktop.ini
+._*
+.AppleDouble
+.LSOverride
+
+# ─── Editors / IDEs ─────────────────────────────────────────────────────────
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# ─── Build / Runtime Artifacts ──────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tmp
+*.temp
+*.map
+coverage/
+out/
+dist/
+.parcel-cache/
+.vite/
+
+# ─── Scratch ────────────────────────────────────────────────────────────────
+tmp/
+scratch/
