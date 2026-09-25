@@ -62,3 +62,5 @@ dist/
 # ─── Scratch ────────────────────────────────────────────────────────────────
 tmp/
 scratch/
+# Local Netlify folder
+.netlify

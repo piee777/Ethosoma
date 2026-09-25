@@ -1039,21 +1039,50 @@ img { display: block; max-width: 100%; }
 .site-footer {
   background: #09090b;
   color: #a1a1aa;
-  padding: 60px 0 40px 0;
+  padding: 3rem 2rem 1.5rem;
+}
+
+/* Fix footer columns alignment to the very top */
+.footer-grid,
+.footer-top,
+footer .container {
+  align-items: flex-start !important;
 }
 
 .footer-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 2fr;
-  gap: 56px;
+  display: grid !important;
+  grid-template-columns: 1.2fr 2fr !important;
+  align-items: start !important;
+  align-content: start !important;
+  gap: 48px;
 }
 
-.footer-brand { max-width: 360px; }
+/* Ensure the brand column stays at top and groups logo with text */
+.footer-brand {
+  max-width: 360px;
+  align-self: start !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 .fb-logo {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.fb-logo img {
+  width: 150px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  margin: 0;
 }
 .fb-logo svg {
   width: 24px;
@@ -1214,7 +1243,7 @@ img { display: block; max-width: 100%; }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
   .stat-num { font-size: 26px; }
 
-  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-grid { grid-template-columns: 1fr !important; gap: 32px; }
   .footer-links { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
 }
