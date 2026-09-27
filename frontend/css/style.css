@@ -885,6 +885,49 @@ body::before {
   #hud { top: 118px; max-height: calc(100vh - 128px); }
 }
 
+/* ---- Mobile: keep the stage live, dock telemetry as a bottom sheet ------
+   #scene keeps its full-viewport box, so the window-sized renderer and
+   OrbitControls' pointer mapping are left exactly as they are — only the
+   panel column is remounted as a sheet over the lower part of the stage.
+   Requires the max-width gate so short-but-wide desktop windows are
+   untouched.                                                              */
+@media screen and (max-width: 768px) {
+  #hud {
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: none;
+    max-height: 45vh;
+    padding: 8px 10px calc(10px + env(safe-area-inset-bottom, 0px));
+    border: 1px solid var(--border);
+    border-bottom: 0;
+    border-radius: 16px 16px 0 0;
+    background: var(--panel);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Sheet affordance — static, so it scrolls away with the panel body. */
+  #hud::before {
+    content: "";
+    flex: none;
+    width: 40px;
+    height: 4px;
+    margin: 0 auto;
+    border-radius: 2px;
+    background: var(--border-hi);
+  }
+
+  /* Landscape phones have very little height: cap the sheet harder. */
+  @media screen and (max-height: 640px) {
+    #hud { max-height: 40vh; }
+  }
+}
+
 /* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
