@@ -29,7 +29,7 @@
   --red:           #dc2626;
   --green:         #16a34a;
   --amber:         #d97706;
-  --cyan:          #0891b2;
+  --cyan:         #0891b2;
 
   --shadow-xs:     0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-sm:     0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02);
@@ -1332,4 +1332,77 @@ footer .container {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation: none !important; transition: none !important; }
+}
+
+/* ==========================================================================
+   MOBILE-ONLY STYLING (Strictly max-width: 768px)
+   Do NOT touch or affect any desktop rules.
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  /* 1. Header & Navigation Row */
+  header,
+  nav,
+  .nav-container {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    padding: 0.75rem 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Rule 1 above adds header padding, but .wrap still carries its own
+     12px/8px padding from the 860px breakpoint — zero it so the bar
+     does not get padded twice. */
+  .site-nav .wrap { padding: 0 !important; }
+
+  /* 2. Compact logo sized proportionally for mobile.
+     !important is required: the logo carries an inline height:200px in the
+     markup. Specificity must also exceed the old max-width:600px block's
+     `.nav-brand-link img { height: auto !important }` at landing.css:1251,
+     or that rule wins and scales the 500x500 source up to 140x140. */
+  .nav-brand-link img,
+  .nav-brand img,
+  .logo,
+  .logo img,
+  header img:first-child {
+    height: 79px !important;
+    width: auto !important;
+    max-width: 140px !important;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  /* 3. Hide desktop navigation text links to prevent wrapping and stacking */
+  .nav-links,
+  .nav-menu,
+  nav > ul,
+  nav a[href^="#"] {
+    display: none !important;
+  }
+
+  /* Hide the nav element itself, not just its links. Rule 1 gives nav
+     0.75rem/1rem padding, so an emptied nav would still occupy ~25px and
+     wrap onto a second line inside .wrap. */
+  nav { display: none !important; }
+
+  /* 4. Keep badge and GitHub button aligned horizontally on the right */
+  .nav-actions,
+  .nav-right,
+  .header-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  /* 5. Hero spacing fix to prevent overlap */
+  .hero-card,
+  .hero-section,
+  main {
+    margin-top: 1rem !important;
+    padding-top: 1rem !important;
+  }
 }
