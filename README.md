@@ -1,4 +1,4 @@
-<p align="center"><img src="frontend/assets/logo.png" width="220" alt="Ethosoma Logo"/></p>
+<p align="center"><img src="frontend/assets/whitelogo.png" width="220" alt="Ethosoma Logo"/></p>
 
 # Ethosoma — Drosophila Connectome Digital Twin
 
@@ -58,4 +58,4 @@ Copyright (c) 2026 Adel Benaissa. All rights reserved. — released under the [M
 
 ## Live Deployment
 
-The live web application is coming soon at **[https://ethosoma.dpdns.org](https://ethosoma.dpdns.org)**.
+**Ethosoma is now live at [https://ethosoma.dpdns.org](https://ethosoma.dpdns.org)** — the landing page and the interactive Simulation Studio are both deployed and publicly accessible.
