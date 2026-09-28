@@ -1,6 +1,6 @@
 <p align="center"><img src="frontend/assets/whitelogo.png" width="220" alt="Ethosoma Logo"/></p>
 
-# Ethosoma — Drosophila Connectome Digital Twin
+# Ethosoma — Drosophila Neural Model
 
 <p align="center">
   <a href="https://ethosoma.dpdns.org"><img src="https://img.shields.io/badge/live-webapp-blue?style=flat-square" alt="Live domain"/></a>

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Ethosoma — Drosophila Connectome Digital Twin. Static frontend plus Netlify Functions for anonymous session analytics.",
+  "description": "Ethosoma — Drosophila Neural Model. Static frontend plus Netlify Functions for anonymous session analytics.",
   "license": "MIT",
   "author": "Adel Benaissa",
   "repository": {

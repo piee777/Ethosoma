@@ -1,9 +1,11 @@
 # Ethosoma — Netlify configuration
-#
-# Note: the deploy publish directory is intentionally NOT set here. It is
-# managed in the Netlify UI (frontend/), and declaring a top-level
-# `publish` here would silently take precedence over that setting.
-# The [dev] block below scopes it to `netlify dev` only.
+
+[build]
+  # The publish dir is pinned here so every deploy path (CLI uploads, netlify
+  # dev, previews) serves the same tree. Without it, CLI deploys can resolve
+  # publish to the repo root — which would upload .env, .git, node_modules, etc.
+  publish = "frontend"
+  functions = "netlify/functions"
 
 [dev]
   # Serves frontend/ statically and mounts netlify/functions/ at

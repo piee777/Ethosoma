@@ -1,5 +1,5 @@
 /**
- * Ethosoma — Drosophila Connectome Digital Twin (landing page)
+ * Ethosoma — Drosophila Neural Model (landing page)
  * Copyright (c) 2026 Adel Benaissa. All rights reserved.
  * MIT License — see LICENSE in the repository root.
  */

@@ -1,5 +1,5 @@
 /* =========================================================================
- * Ethosoma — Drosophila Connectome Digital Twin (simulation engine)
+ * Ethosoma — Drosophila Neural Model (simulation engine)
  * Copyright (c) 2026 Adel Benaissa. All rights reserved.
  * MIT License — see LICENSE in the repository root.
  *
