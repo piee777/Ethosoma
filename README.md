@@ -25,7 +25,9 @@ git clone https://github.com/piee777/ethosoma.git
 cd ethosoma
 ```
 
-No package installation is required — the engine is written in dependency-free ES modules and Three.js (v0.160) is served via import map. You only need Python 3 (standard library) or any static-file server.
+The simulation engine is written in dependency-free ES modules and Three.js (v0.160) is served via import map, so viewing the site needs no build step and no install. You only need Python 3 (standard library) or any static-file server.
+
+The sole npm dependency in the repository is `@netlify/blobs`, used by the optional analytics Function described below — it is only needed when you deploy to Netlify or run `netlify dev`.
 
 ```bash
 # Option A — Ethosoma dev server (serves frontend/ + models/, correct MIME + CORS)
@@ -37,15 +39,50 @@ python3 -m http.server 8000 -d frontend
 
 Then open **http://localhost:8000** — the landing page (research methodology) and **Launch Simulation Studio** (interactive twin) are both served from the same origin.
 
+## Admin Dashboard
+
+A private, key-gated console at **`/admin.html`** reports anonymous session telemetry: total visitors, average time spent, top visiting countries, device split, and a per-session log with date/time, country, device, time spent, and entry page. A manual refresh button and a 30-second auto-refresh toggle are both provided.
+
+### How it works
+
+| Piece | Role |
+| --- | --- |
+| `netlify/functions/analytics.js` | Netlify Function. `POST` ingests events, `GET` returns the metrics payload. |
+| `frontend/js/tracking.js` | Loaded by `index.html` and `app.html`. Loaded by nothing else. |
+| `frontend/admin.html` | The console. Gated client-side, authorized server-side. |
+
+- **Session identity** — a random id generated once per tab and kept in `sessionStorage`. No cookies, no `localStorage`, no cross-site identifier; it dies with the tab and is reused across pages within it.
+- **Duration** — a monotonic timer that only advances while the tab is visible, so a backgrounded tab does not inflate the number. A 15-second heartbeat plus `sendBeacon` on `visibilitychange` and unload report the running total; the server keeps the **maximum** received, so out-of-order beacons cannot lose time.
+- **Geo** — read server-side from the edge (`x-country` / `cf-ipcountry`), never from the client, so it cannot be spoofed by page JavaScript.
+- **Storage** — Netlify Blobs, retaining the last 200 sessions. If Blobs is unavailable the Function degrades to an in-memory store and the console says so rather than silently showing stale data.
+
+### Configuration
+
+Set the `ADMIN_KEY` environment variable in Netlify (Site configuration → Environment variables). Copy `.env.example` for local use and generate a value with:
+
+```bash
+openssl rand -base64 32
+```
+
+The console prompts for this secret, verifies it against the Function, and holds it in `sessionStorage` for the tab. **Every `GET` is re-authorized server-side** with a constant-time comparison and per-IP rate limiting — hiding the page is not the security boundary. If `ADMIN_KEY` is unset the admin surface is hard-disabled rather than defaulted open.
+
+### Privacy
+
+Stored per session: country code, coarse device class and browser/OS label, active seconds, entry path, referrer, and timestamps. No IP address is persisted, and the data is never shared with third parties. Visits to `/admin.html` itself are excluded so console use does not inflate the visitor count. If you need consent-gated or Do-Not-Track-aware collection before deploying publicly, `frontend/js/tracking.js` is the single place to add it.
+
 ## Repository Layout
 
 ```
-backend/server.py      Threaded HTTP server (CORS + MIME-correct, traversal-safe)
-frontend/              Landing page (index.html) + simulation studio (app.html)
-frontend/data/         Connectome binary + FAFB neuron / coordinate tables
-frontend/assets/       Brand assets & anatomy renders
-models/fly_brain.obj   Whole-brain anatomical mesh
-scripts/ , tools/      Connectome processing & render utilities
+backend/server.py         Threaded HTTP server (CORS + MIME-correct, traversal-safe)
+netlify/functions/        analytics.js — session ingestion + authorized metrics endpoint
+netlify.toml              Hardening headers for the private console
+frontend/                 Landing (index.html) + simulation studio (app.html)
+frontend/admin.html       Private analytics console
+frontend/js/tracking.js   Session/duration telemetry collector
+frontend/data/            Connectome binary + FAFB neuron / coordinate tables
+frontend/assets/          Brand assets & anatomy renders
+models/fly_brain.obj      Whole-brain anatomical mesh
+scripts/ , tools/         Connectome processing & render utilities
 ```
 
 ## Data & Attribution

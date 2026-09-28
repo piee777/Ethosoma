@@ -1,0 +1,7 @@
+# Ethosoma — public research portal.
+# The admin console is a private surface and must not be indexed.
+
+User-agent: *
+Disallow: /admin.html
+Disallow: /admin
+Disallow: /.netlify/functions/

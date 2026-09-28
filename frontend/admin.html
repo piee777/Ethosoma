@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--
+  Ethosoma — Admin Dashboard (PRIVATE)
+  Copyright (c) 2026 Adel Benaissa. All rights reserved.
+  MIT License — see LICENSE in the repository root.
+
+  Access is gated client-side by an admin secret that is verified server-side
+  against the ADMIN_KEY environment variable on every request. Nothing here is
+  served without a 200 from /.netlify/functions/analytics.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethosoma · Admin Console</title>
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="referrer" content="no-referrer" />
+  <link rel="icon" type="image/png" href="assets/whitelogo.png?v=3" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Inter:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+  <!-- ─── Lock Screen ──────────────────────────────────────────────────── -->
+  <div id="lock-screen">
+    <div class="lock-card">
+      <div class="lock-brand">
+        <div class="lock-mark" aria-hidden="true">&#9673;</div>
+        <div>
+          <div class="lock-title">ETHOSOMA</div>
+          <div class="kicker">Admin Console &middot; Restricted</div>
+        </div>
+      </div>
+
+      <p class="lock-body">
+        <span class="caret">&gt;</span> This console is private. Authenticate with the admin secret
+        to read session telemetry.
+      </p>
+
+      <form id="lock-form" autocomplete="off">
+        <label class="lock-field" for="key-input">
+          <span class="lock-prompt" aria-hidden="true">&gt;</span>
+          <input
+            id="key-input"
+            name="key"
+            type="password"
+            placeholder="admin secret key"
+            spellcheck="false"
+            autocomplete="off"
+            autocapitalize="off"
+            autocorrect="off"
+            required
+          />
+        </label>
+
+        <div class="lock-actions">
+          <button class="btn-primary" type="submit" id="unlock-btn">Authenticate</button>
+          <span class="lock-status" id="lock-status" role="status" aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ─── Dashboard ────────────────────────────────────────────────────── -->
+  <div id="dashboard" hidden>
+    <div class="shell">
+
+      <header class="topbar">
+        <div class="topbar-id">
+          <div class="topbar-mark" aria-hidden="true">&#9673;</div>
+          <div>
+            <div class="topbar-name">ETHOSOMA</div>
+            <div class="topbar-sub">session telemetry &middot; last <span id="cap-sessions">200</span> visits</div>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <div class="status-line">
+            <span class="status-dot" id="status-dot" data-state="idle"></span>
+            <span id="status-text">idle</span>
+          </div>
+          <button type="button" id="refresh-btn">Refresh</button>
+          <button type="button" id="auto-btn" class="btn-toggle" aria-pressed="false">Auto&nbsp;30s&nbsp;:&nbsp;off</button>
+          <button type="button" id="lock-btn">Lock</button>
+        </div>
+      </header>
+
+      <!-- Metrics -->
+      <section class="metrics" aria-label="Summary metrics">
+        <article class="card">
+          <span class="kicker">Total Visitors</span>
+          <div class="card-value is-cyan" id="m-visitors">&mdash;</div>
+          <span class="card-note" id="m-visitors-note">sessions in the retention window</span>
+        </article>
+
+        <article class="card">
+          <span class="kicker">Avg. Time Spent</span>
+          <div class="card-value" id="m-duration">&mdash;</div>
+          <span class="card-note" id="m-duration-note">active time per session</span>
+        </article>
+
+        <article class="card">
+          <span class="kicker">Top Countries</span>
+          <div class="card-value" id="m-countries">&mdash;</div>
+          <div class="rank" id="m-country-list"></div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">Device Split</span>
+          <div class="card-value" id="m-devices">&mdash;</div>
+          <div class="rank" id="m-device-list"></div>
+        </article>
+      </section>
+
+      <!-- Detailed logs -->
+      <section class="log-panel" aria-label="Session logs">
+        <div class="log-head">
+          <span class="log-title">Session Log</span>
+          <span class="kicker" id="log-meta">&mdash;</span>
+        </div>
+
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Date / Time</th>
+                <th scope="col">Country</th>
+                <th scope="col">Device</th>
+                <th scope="col">Time Spent on Site</th>
+                <th scope="col">Initial Page</th>
+              </tr>
+            </thead>
+            <tbody id="log-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/admin.js" defer></script>
+</body>
+</html>
