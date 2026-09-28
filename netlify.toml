@@ -1,8 +1,17 @@
 # Ethosoma — Netlify configuration
 #
-# Note: the publish directory is intentionally NOT set here. It is managed in
-# the Netlify UI (frontend/), and declaring it here would silently take
-# precedence over that setting. Only hardening headers are declared below.
+# Note: the deploy publish directory is intentionally NOT set here. It is
+# managed in the Netlify UI (frontend/), and declaring a top-level
+# `publish` here would silently take precedence over that setting.
+# The [dev] block below scopes it to `netlify dev` only.
+
+[dev]
+  # Serves frontend/ statically and mounts netlify/functions/ at
+  # /.netlify/functions/*. No framework command is needed — the site is
+  # plain static HTML plus one Function.
+  publish = "frontend"
+  port = 8888
+  autoLaunch = false
 
 # ─── Private admin console ─────────────────────────────────────────────────
 # The dashboard is client-gated, so the response body is never sensitive by

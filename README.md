@@ -43,11 +43,39 @@ Then open **http://localhost:8000** — the landing page (research methodology) 
 
 A private, key-gated console at **`/admin.html`** reports anonymous session telemetry: total visitors, average time spent, top visiting countries, device split, and a per-session log with date/time, country, device, time spent, and entry page. A manual refresh button and a 30-second auto-refresh toggle are both provided.
 
+### Running it
+
+**On the deployed site** (the only place geo data and persistence are real):
+
+```bash
+# 1. Set the secret in Netlify: Site configuration -> Environment variables
+#    ADMIN_KEY = <openssl rand -base64 32>
+netlify deploy --prod        # or push to main and let the build run
+```
+
+Then open **`https://<your-site>/admin.html`** and paste the secret at the lock screen.
+
+**Locally**, for development:
+
+```bash
+npm install                                   # only @netlify/blobs
+printf 'ADMIN_KEY=%s\n' "$(openssl rand -hex 24)" > .env
+npm run dev                                   # http://localhost:8888/admin.html
+```
+
+`npm run dev` starts a dependency-free server (`scripts/dev-server.mjs`) that serves `frontend/` and mounts the analytics Function in-process. Two things differ from production, and the console tells you about the first one on screen:
+
+- **No persistence.** There is no Blobs context outside Netlify, so sessions live in memory and reset when the server restarts. The console surfaces this as a `storage: memory` warning.
+- **No geo data.** Country codes come from Netlify's edge headers, which do not exist locally, so every visit reports `??`.
+
+To exercise both for real, deploy. For full local Netlify emulation use `npm run dev:netlify` — note that `netlify dev` installs your site's build plugins, which currently fails on npm ≥ 12 because remote tarball fetching is disabled by default (`EALLOWREMOTE`). That is a toolchain limitation, not a project one.
+
 ### How it works
 
 | Piece | Role |
 | --- | --- |
 | `netlify/functions/analytics.js` | Netlify Function. `POST` ingests events, `GET` returns the metrics payload. |
+| `scripts/dev-server.mjs` | Zero-dependency local server: static `frontend/` + the Function mounted in-process. |
 | `frontend/js/tracking.js` | Loaded by `index.html` and `app.html`. Loaded by nothing else. |
 | `frontend/admin.html` | The console. Gated client-side, authorized server-side. |
 

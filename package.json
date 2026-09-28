@@ -11,7 +11,8 @@
     "url": "https://github.com/piee777/Ethosoma.git"
   },
   "scripts": {
-    "dev": "netlify dev",
+    "dev": "node scripts/dev-server.mjs",
+    "dev:netlify": "netlify dev",
     "serve": "python3 backend/server.py --port 8000"
   },
   "dependencies": {
