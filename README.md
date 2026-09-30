@@ -77,7 +77,7 @@ To exercise both for real, deploy. For full local Netlify emulation use `npm run
 | `netlify/functions/analytics.js` | Netlify Function. `POST` ingests events, `GET` returns the metrics payload. |
 | `scripts/dev-server.mjs` | Zero-dependency local server: static `frontend/` + the Function mounted in-process. |
 | `frontend/js/tracking.js` | Loaded by `index.html` and `app.html`. Loaded by nothing else. |
-| `frontend/admin.html` | The console. Gated client-side, authorized server-side. |
+
 
 - **Session identity** — a random id generated once per tab and kept in `sessionStorage`. No cookies, no `localStorage`, no cross-site identifier; it dies with the tab and is reused across pages within it.
 - **Duration** — a monotonic timer that only advances while the tab is visible, so a backgrounded tab does not inflate the number. A 15-second heartbeat plus `sendBeacon` on `visibilitychange` and unload report the running total; the server keeps the **maximum** received, so out-of-order beacons cannot lose time.
