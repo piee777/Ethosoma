@@ -39,64 +39,6 @@ python3 -m http.server 8000 -d frontend
 
 Then open **http://localhost:8000** — the landing page (research methodology) and **Launch Simulation Studio** (interactive twin) are both served from the same origin.
 
-## Admin Dashboard
-
-A private, key-gated console at **`/admin.html`** reports anonymous session telemetry: total visitors, average time spent, top visiting countries, device split, and a per-session log with date/time, country, device, time spent, and entry page. A manual refresh button and a 30-second auto-refresh toggle are both provided.
-
-### Running it
-
-**On the deployed site** (the only place geo data and persistence are real):
-
-```bash
-# 1. Set the secret in Netlify: Site configuration -> Environment variables
-#    ADMIN_KEY = <openssl rand -base64 32>
-netlify deploy --prod        # or push to main and let the build run
-```
-
-Then open **`https://<your-site>/admin.html`** and paste the secret at the lock screen.
-
-**Locally**, for development:
-
-```bash
-npm install                                   # only @netlify/blobs
-printf 'ADMIN_KEY=%s\n' "$(openssl rand -hex 24)" > .env
-npm run dev                                   # http://localhost:8888/admin.html
-```
-
-`npm run dev` starts a dependency-free server (`scripts/dev-server.mjs`) that serves `frontend/` and mounts the analytics Function in-process. Two things differ from production, and the console tells you about the first one on screen:
-
-- **No persistence.** There is no Blobs context outside Netlify, so sessions live in memory and reset when the server restarts. The console surfaces this as a `storage: memory` warning.
-- **No geo data.** Country codes come from Netlify's edge headers, which do not exist locally, so every visit reports `??`.
-
-To exercise both for real, deploy. For full local Netlify emulation use `npm run dev:netlify` — note that `netlify dev` installs your site's build plugins, which currently fails on npm ≥ 12 because remote tarball fetching is disabled by default (`EALLOWREMOTE`). That is a toolchain limitation, not a project one.
-
-### How it works
-
-| Piece | Role |
-| --- | --- |
-| `netlify/functions/analytics.js` | Netlify Function. `POST` ingests events, `GET` returns the metrics payload. |
-| `scripts/dev-server.mjs` | Zero-dependency local server: static `frontend/` + the Function mounted in-process. |
-| `frontend/js/tracking.js` | Loaded by `index.html` and `app.html`. Loaded by nothing else. |
-
-
-- **Session identity** — a random id generated once per tab and kept in `sessionStorage`. No cookies, no `localStorage`, no cross-site identifier; it dies with the tab and is reused across pages within it.
-- **Duration** — a monotonic timer that only advances while the tab is visible, so a backgrounded tab does not inflate the number. A 15-second heartbeat plus `sendBeacon` on `visibilitychange` and unload report the running total; the server keeps the **maximum** received, so out-of-order beacons cannot lose time.
-- **Geo** — read server-side from the edge (`x-country` / `cf-ipcountry`), never from the client, so it cannot be spoofed by page JavaScript.
-- **Storage** — Netlify Blobs, retaining the last 200 sessions. If Blobs is unavailable the Function degrades to an in-memory store and the console says so rather than silently showing stale data.
-
-### Configuration
-
-Set the `ADMIN_KEY` environment variable in Netlify (Site configuration → Environment variables). Copy `.env.example` for local use and generate a value with:
-
-```bash
-openssl rand -base64 32
-```
-
-The console prompts for this secret, verifies it against the Function, and holds it in `sessionStorage` for the tab. **Every `GET` is re-authorized server-side** with a constant-time comparison and per-IP rate limiting — hiding the page is not the security boundary. If `ADMIN_KEY` is unset the admin surface is hard-disabled rather than defaulted open.
-
-### Privacy
-
-Stored per session: country code, coarse device class and browser/OS label, active seconds, entry path, referrer, and timestamps. No IP address is persisted, and the data is never shared with third parties. Visits to `/admin.html` itself are excluded so console use does not inflate the visitor count. If you need consent-gated or Do-Not-Track-aware collection before deploying publicly, `frontend/js/tracking.js` is the single place to add it.
 
 ## Repository Layout
 
